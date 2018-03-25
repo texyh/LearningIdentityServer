@@ -1,0 +1,10 @@
+﻿@using Microsoft.AspNetCore.Mvc.Routing
+<dl>
+    @foreach (var claim in User.Claims)
+    {
+        <dt>@claim.Type</dt>
+        <dd>@claim.Value</dd>
+    }
+</dl>
+
+@Html.ActionLink("logout", "Logout")
