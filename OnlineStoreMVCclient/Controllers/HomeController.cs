@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStoreMVCclient.Models;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
 
 namespace OnlineStoreMVCclient.Controllers
 {
@@ -41,6 +43,16 @@ namespace OnlineStoreMVCclient.Controllers
         {
             await HttpContext.SignOutAsync("Cookies");
             await HttpContext.SignOutAsync("oidc");
+        }
+
+        public async Task<IActionResult> CallApiUsingUserAccessToken()
+        {
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var client = new HttpClient();
+            client.SetBearerToken(accessToken);
+            var content = await client.GetStringAsync("http://localhost:7001/identity");
+            ViewBag.Json = JArray.Parse(content).ToString();
+            return View("Contact");
         }
     }
 }

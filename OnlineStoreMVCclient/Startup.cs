@@ -38,7 +38,13 @@ namespace OnlineStoreMVCclient
                     options.Authority = "http://localhost:7000";
                     options.RequireHttpsMetadata = false;
                     options.ClientId = "online.store.mvc";
+                    options.ClientSecret = "secret";
+                    options.ResponseType = "code id_token";
+                    options.GetClaimsFromUserInfoEndpoint = true;
                     options.SaveTokens = true;
+
+                    options.Scope.Add("online.store.api");
+                    options.Scope.Add("offline_access");
                 });
         }
 

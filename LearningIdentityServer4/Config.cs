@@ -50,7 +50,11 @@ namespace LearningIdentityServer4
                 {
                     ClientId = "online.store.mvc",
                     ClientName = "MVC Client",
-                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
                     // where to redirect to after login
                                         RedirectUris = { "http://localhost:6002/signin-oidc" },
                     // where to redirect to after logout
@@ -59,8 +63,10 @@ namespace LearningIdentityServer4
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
-                    }
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "online.store.api"
+                    },
+                    AllowOfflineAccess = true
                 }
             };
        
