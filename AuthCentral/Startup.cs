@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using AuthCentral.Data;
+using AuthCentral.Models;
+using AuthCentral.Services;
+using LearningIdentityServer4;
 
-namespace OnlineStoreMVCclient
+namespace AuthCentral
 {
     public class Startup
     {
@@ -22,30 +27,25 @@ namespace OnlineStoreMVCclient
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            // Add application services.
+            services.AddTransient<IEmailSender, EmailSender>();
+
             services.AddMvc();
 
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-
-            services.AddAuthentication(options =>
-                {
-                    options.DefaultScheme = "Cookies";
-                    options.DefaultChallengeScheme = "oidc";
-                })
-                .AddCookie("Cookies")
-                .AddOpenIdConnect("oidc", options =>
-                {
-                    options.SignInScheme = "Cookies";
-                    options.Authority = "http://localhost:7000/";
-                    options.RequireHttpsMetadata = false;
-                    options.ClientId = "online.store.mvc";
-                    options.ClientSecret = "secret";
-                    options.ResponseType = "code id_token";
-                    options.GetClaimsFromUserInfoEndpoint = true;
-                    options.SaveTokens = true;
-
-                    options.Scope.Add("online.store.api");
-                    options.Scope.Add("offline_access");
-                });
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddInMemoryPersistedGrants()
+                .AddInMemoryIdentityResources(Config.GetIdentityResources())
+                .AddInMemoryApiResources(Config.GetApiResources())
+                .AddInMemoryClients(Config.GetClients())
+                .AddAspNetIdentity<ApplicationUser>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,15 +55,16 @@ namespace OnlineStoreMVCclient
             {
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseAuthentication();
-
             app.UseStaticFiles();
+
+            app.UseIdentityServer();
 
             app.UseMvc(routes =>
             {

@@ -30,7 +30,7 @@ namespace OnlineStoreApi
             services.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = "http://localhost:7000";
+                    options.Authority = "http://localhost:7000/";
                     options.RequireHttpsMetadata = false;
                     options.ApiName = "online.store.api";
                 });

@@ -50,7 +50,7 @@ namespace OnlineStoreMVCclient.Controllers
             var accessToken = await HttpContext.GetTokenAsync("access_token");
             var client = new HttpClient();
             client.SetBearerToken(accessToken);
-            var content = await client.GetStringAsync("http://localhost:7001/identity");
+            var content = await client.GetStringAsync("http://localhost:6001/api/identity");
             ViewBag.Json = JArray.Parse(content).ToString();
             return View("Contact");
         }

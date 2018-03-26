@@ -16,7 +16,7 @@ namespace OnlineStoreConsoleClient
 
         static async Task Configure()
         {
-            var disco = await DiscoveryClient.GetAsync("http://localhost:7000");
+            var disco = await DiscoveryClient.GetAsync("http://localhost:7000/");
             if (disco.IsError)
             {
                 Console.WriteLine(disco.Error);
