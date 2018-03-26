@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStoreMVCclient", "Onl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthCentral", "AuthCentral\AuthCentral.csproj", "{338F3F1F-3831-45BA-8F25-BB936E66C9E5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JavaScriptClient", "JavaScriptClient\JavaScriptClient.csproj", "{67755D4A-9C4F-4F35-87E7-DD6A542AAF3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{338F3F1F-3831-45BA-8F25-BB936E66C9E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{338F3F1F-3831-45BA-8F25-BB936E66C9E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{338F3F1F-3831-45BA-8F25-BB936E66C9E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67755D4A-9C4F-4F35-87E7-DD6A542AAF3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67755D4A-9C4F-4F35-87E7-DD6A542AAF3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67755D4A-9C4F-4F35-87E7-DD6A542AAF3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67755D4A-9C4F-4F35-87E7-DD6A542AAF3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

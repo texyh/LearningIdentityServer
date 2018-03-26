@@ -68,6 +68,23 @@ namespace LearningIdentityServer4
                         "online.store.api"
                     },
                     AllowOfflineAccess = true
+                },
+                new Client
+                {
+                    ClientId = "javascript.client",
+                    ClientName = "JavaScript Client",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+                    RequireConsent = false,
+                    RedirectUris = { "http://localhost:6003/callback.html" },
+                    PostLogoutRedirectUris = { "http://localhost:6003/index.html" },
+                    AllowedCorsOrigins = { "http://localhost:6003" },
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "online.store.api"
+                    }
                 }
             };
        
